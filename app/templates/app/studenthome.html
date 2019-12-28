@@ -1,0 +1,45 @@
+{% extends "app/base.html" %}
+{% block content %}
+
+<br>
+    <h5 style="text-align:center">Offers for posting Instagram stories at these restaurants in your area!</h5>
+    <hr>
+    {% for posting in storyPostings %}
+      <div class="card"> <div class="card-body" style="background-color:#ffe6f9;">
+        <article class="media content-section">
+            <div class="media-body">
+	        <strong><h5 style="text-align:center" class="card-title">{{  posting.restaurant.username }}</h5></strong>
+                <p class="text-muted" style="text-align:center">Expires on {{ posting.expiry_date }}!</p>
+	        <p style="text-align:center"> {{ posting.description_text }} </p>
+                <p style="text-align:center"> Only {{ posting.quantity }} left.</p>
+		<div id="formbox">
+		<form action={% url 'home'%}>
+		  <button style="#ff44d5;">Submit a story</button>
+		</form>
+		</div>
+	    </div>
+          </article>
+      </div> </div>
+    {% endfor %} 
+    <br>
+    <h5 style="text-align:center">Offers for posting Instagram posts at these restaurants in your area!</h5>
+    <hr>
+    {% for posting in postPostings %}
+    <div class="card"> <div class="card-body" style="background-color:#ffe6f9;">
+        <article class="media content-section">
+            <div class="media-body">
+                <strong><h5 style="text-align:center" class="card-title">{{  posting.restaurant.username }}</h5></strong>
+                <p class="text-muted" style="text-align:center">Expires on {{ posting.expiry_date }}!</p>
+                <p style="text-align:center"> {{ posting.description_text }} </p>
+                <p style="text-align:center"> Only {{ posting.quantity }} left.</p>
+		<div id="formbox">
+		<form action={% url 'home' %}>
+                  <button style="#ff44d5;">Submit a post</button>
+                </form>
+		</div>
+            </div>
+          </article>
+      </div> </div>
+    {% endfor %}
+
+{% endblock content %}

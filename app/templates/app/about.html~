@@ -1,0 +1,9 @@
+{% extends "app/base.html" %}
+{% block content %}
+<br>
+<h2>ABOUT US</h2>
+<hr>
+    <p>As a platform, we strive to connect student influencers on Instagram with local restaurants.</p> 
+    <p>Restaurants can gain visibility in campus communities and students can enjoy free meals in exchange for their content.</p>
+    <p>Sign up if you are a restaurant near a university, or a student with over 500 followers on Instagram!</p>
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% extends "app/base.html" %}
+{% block content %}
+     <div class="content-section">
+       <form action={% url 'student-registration' %}>
+	 <button>Student</button>
+       </form>
+       <form action={% url 'restaurant-registration' %}>
+         <button>Restaurant</button>
+       </form>
+     </div>
+{% endblock content %}
