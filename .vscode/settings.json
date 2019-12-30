@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/Users/jeannajoseph/.virtualenvs/djangodev/bin/python"
+    "python.pythonPath": "/Users/jeannajoseph/.virtualenvs/djangodev/bin/python",
+    "pythonIndent.useTabOnHangingIndent": true
 }

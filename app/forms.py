@@ -1,40 +1,42 @@
 from django import forms
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile
+from .models import *
+from django.contrib.auth import get_user_model
  
-class StudentRegisterForm(UserCreationForm):
-    name = forms.CharField(max_length=30, required=True, help_text='Required: enter first and last name.')
+class StudentUserForm(UserCreationForm):    
     instagram_handle = forms.CharField(max_length=30, required=True)
-    email = forms.EmailField(max_length=254, required=True)
-    student_status = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
-
+    
     class Meta:
         model = User
-        fields = ['username', 'name', 'instagram_handle', 'email', 'password1', 'password2', 'student_status']
-
-
-class RestaurantRegisterForm(UserCreationForm):
-    name = forms.CharField(max_length=30, required=True, help_text='Required: enter name of restaurant.')
-    instagram_handle = forms.CharField(max_length=30, required=False)
-    email = forms.EmailField(max_length=254, required=True)
-    student_status = forms.BooleanField(widget=forms.HiddenInput(), initial=False) 
-    class Meta:
-        model = User
-        fields = ['username', 'name', 'instagram_handle', 'email', 'password1', 'password2', 'student_status']
-
-
-class ProfileForm(forms.ModelForm):
-    is_student = forms.BooleanField()
-
-    class Meta:
-        model = Profile
-        fields = ['is_student']
+        fields = ('first_name', 'last_name', 'instagram_handle', 'email', 'username', 'password1', 'password2')
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.is_student = True
+        if commit:
+            user.save()
+        return user
         
-    def set_is_student(self, status):
-        data = self.data.copy()
-        data['is_student'] = status
-        self.data = data
+class RestaurantUserForm(UserCreationForm):  
+    restaurant_name = forms.CharField(max_length=60, required=True)
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'restaurant_name', 'email', 'username', 'password1', 'password2')
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.is_student = False
+        if commit:
+            user.save()
+        return user
+ 
+class StudentProfileForm(forms.ModelForm):
+    class Meta:
+        model = StudentProfile
+        fields = ('instagram_handle',)
+        
+class RestaurantProfileForm(forms.ModelForm):
+    class Meta:
+        model = RestaurantProfile
+        fields = ('restaurant_name',)
 
 class StudentPostSubmission(forms.Form):
     link = forms.CharField(
