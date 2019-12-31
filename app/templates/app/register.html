@@ -1,15 +1,9 @@
 {% extends "app/base.html" %}
 {% block content %}
      <div class="content-section">
-       <div id="formbox">
-       <form action={% url 'student-registration' %}>
-	 <button>Student</button>
-       </form>
-       </div>
-       <div id="formbox">
-       <form action={% url 'restaurant-registration' %}>
-         <button>Restaurant</button>
-       </form>
-       </div>
+      <h2>Sign up for your account</h2>
+      <p class="lead">Select below the type of account you want to create</p>
+      <a href="{% url 'student-registration'%}" class="btn btn-Student btn-lg" role="button">Student</a>
+      <a href="{% url 'restaurant-registration' %}" class="btn btn-Restaurant btn-lg" role="button">Restaurant</a>
      </div>
 {% endblock content %}

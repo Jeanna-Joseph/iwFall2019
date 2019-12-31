@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect, render_to_response
 from django.http import HttpResponse
-from django.contrib.auth import get_user_model
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .forms import *
 from .models import *
-
-User = get_user_model()
 
 # Create your views here.                                                                                                 
 def home(request):
@@ -19,8 +17,11 @@ def home(request):
 def studenthome(request):
     if request.user.is_authenticated:
         student = request.user.is_student
+        if (student == False):
+            return redirect('restaurant-home')
     else:
         student = False
+        return redirect('home')
 
     context = {
         'postPostings': RestaurantPostPosting.objects.all(),
@@ -34,6 +35,7 @@ def studenthome(request):
 def register(request):
     if request.user.is_authenticated:        
         student = request.user.is_student
+        return redirect('homepage')
     else:
         student = False
     return render(request, 'app/register.html', {'loggedIn': request.user.is_authenticated, 'student': student})
@@ -41,6 +43,7 @@ def register(request):
 def studentregister(request):
     if request.user.is_authenticated:
         student = request.user.is_student
+        return redirect('homepage')
     else:
         student = False
 
@@ -70,6 +73,7 @@ def studentregister(request):
 def restaurantregister(request):
     if request.user.is_authenticated:
         student = request.user.is_student
+        return redirect('homepage')
     else:
         student = False
 
@@ -99,24 +103,13 @@ def restaurantregister(request):
 def login(request):
     if request.user.is_authenticated:
         student = request.user.is_student
+        if (student == True):
+            return redirect('student-home')
+        else:
+            return redirect('restaurant-home')
     else:
-        student = 0
-
+        student = False
     return render(request, 'app/login.html', {'loggedIn': request.user.is_authenticated, 'student': student})
-
-def studentlogin(request):
-    if request.user.is_authenticated:
-        student = request.user.is_student
-    else:
-        student = 0
-    return render(request, 'app/studentlogin.html', {'loggedIn': request.user.is_authenticated, 'student': student})
-
-def restaurantlogin(request):
-    if request.user.is_authenticated:
-        student = request.user.is_student
-    else:
-        student = 0
-    return render(request, 'app/restaurantlogin.html', {'loggedIn': request.user.is_authenticated, 'student': student})
 
 def homepage(request):
     if request.user.is_authenticated:       
@@ -128,14 +121,19 @@ def homepage(request):
 def restauranthome(request):
     if request.user.is_authenticated:
         student = request.user.is_student
+        if (student == True):
+            return redirect('student-home')
     else:
-        student = 0
+        return redirect('home')
     
     return render(request, 'app/restauranthome.html', {'loggedIn': request.user.is_authenticated, 'student': student})
 
 def logout(request):
-    return render(request, 'app/logout.html', {'loggedIn': 0, 'student': 0})
-
+    if request.user.is_authenticated:
+        return render(request, 'app/logout.html', {'loggedIn': False, 'student': False})       
+    else:
+        return redirect('home')
+    
 #def studentsubmission(request):
 #    if request.method == 'POST':
         #if:
