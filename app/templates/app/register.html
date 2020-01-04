@@ -1,9 +1,22 @@
 {% extends "app/base.html" %}
 {% block content %}
+<br>
      <div class="content-section">
-      <h2>Sign up for your account</h2>
-      <p class="lead">Select below the type of account you want to create</p>
-      <a href="{% url 'student-registration'%}" class="btn btn-Student btn-lg" role="button">Student</a>
-      <a href="{% url 'restaurant-registration' %}" class="btn btn-Restaurant btn-lg" role="button">Restaurant</a>
+      <h4 style="font-weight: 400;" style="line-height: 0pt;">Register</h4>
+      <div class="border-top pt-3">
+      <div style="text-align:center"> 
+           <a href="{% url 'student-registration'%}" class="btn btn-outline-info btn-lg btn-block" role="button">Student</a>
+      </div>
+     </div>
+      <br>
+      <div style="text-align:center"> 
+      <a href="{% url 'restaurant-registration' %}" class="btn btn-outline-info btn-lg btn-block" role="button">Restaurant</a>
+      </div>
+      <br>
+      <div class="border-top pt-10">
+	     <small class="text-muted">
+	       Have an account already?<a class="ml-2" href="{% url 'login' %}">Log in</a>
+             </small>
+	 </div>
      </div>
 {% endblock content %}

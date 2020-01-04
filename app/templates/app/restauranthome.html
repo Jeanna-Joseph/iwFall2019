@@ -2,33 +2,55 @@
 {% block content %}
 
 <br>
-    <h5 style="text-align:center">Post a reward in exchange for Instagram stories!</h5>
-    <hr>
-      <div class="card"> <div class="card-body" style="background-color:#ffe6f9;">
-        <article class="media content-section">
-            <div class="media-body">
-		<div id="formbox">
-		<form action={% url 'home' %}>
-		  <button style="#ff44d5;">Submit</button>
-		</form>
-		</div>
-	    </div>
-          </article>
-      </div> </div>
-    <br><hr>
-<h5 style="text-align:center">Post a reward in exchange for Instagram posts!</h5>
-    <hr>
-      <div class="card"> <div class="card-body" style="background-color:#ffe6f9;">
-        <article class="media content-section">
-            <div class="media-body">
-                <div id="formbox">
-                <form action={% url 'home' %}>
-                  <button style="#ff44d5;">Submit</button>
-                </form>
-                </div>
-            </div>
-          </article>
-      </div> </div>
-    <br>
+<h4 style="font-weight: 400;" style="line-height: 0pt;">Welcome <strong>{{ user.username }}</strong></h4>
+<div class="border-top pt-3"></div>
 
+{% if not paid %}
+  <h5 style="text-align:center">Thank you for registering to join postento. The postento team will be emailing you shortly to finalize your membership!</h5>
+{% else %}
+  {% if currentStory is None %}
+  <div style="text-align:center">
+    <div class="card"> 
+            <div class="card-body" style="background-color:#ffe6f9;">
+              <a href="{% url 'restaurant-story' %}" class="btn btn-outline-info btn-lg btn-block" role="button">Post Instagram story reward</a>
+            </div>
+        </div>
+        </div>
+      <br>
+  {% else %}
+  <h5 style="font-weight: 400;" style="text-align:center">Posted reward for Instagram stories</h5>
+  <div style="text-align:center">
+    <div class="card"> 
+      <div class="card-body" style="background-color:#ffe6f9;">
+        <p style="text-align:center;">Description: {{currentStory.description_text}}</p>
+        <p style="text-align:center;">Quantity left: {{currentStory.quantity}}</p>
+        <p style="text-align:center;">Expiring on {{currentStory.expiry_date}}</p>    </div>
+    </div>
+  </div>
+  <br>
+  <hr>
+  {% endif %}
+  {% if currentPost is None %}
+  <div style="text-align:center">
+        <div class="card"> 
+            <div class="card-body" style="background-color:#ffe6f9;">
+              <a href="{% url 'restaurant-post' %}" class="btn btn-outline-info btn-lg btn-block" role="button">Post Instagram post reward</a>
+            </div>
+        </div>
+        </div>
+      <br>
+  {% else %}
+  <h5 style="font-weight: 400;" style="text-align:center">Posted reward for Instagram posts</h5>
+  <div style="text-align:center">
+    <div class="card"> 
+      <div class="card-body" style="background-color:#ffe6f9;">
+        <p style="text-align:center;">Description: {{currentPost.description_text}}</p>
+        <p style="text-align:center;">Quantity left: {{currentPost.quantity}}</p>
+        <p style="text-align:center;">Expiring on {{currentPost.expiry_date}}</p>    </div>
+    </div>
+    </div>
+  <br>
+  <hr>
+  {% endif %}
+{% endif %}
 {% endblock content %}

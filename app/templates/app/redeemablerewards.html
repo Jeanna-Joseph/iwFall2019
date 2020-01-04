@@ -1,0 +1,47 @@
+{% extends "app/base.html" %}
+{% block content %}
+
+<br> 
+<h4 style="font-weight: 400;" style="line-height: 0pt;">Redeem rewards</strong></h4>
+<div class="border-top pt-3"></div>
+
+{% if combinedStories %}
+    <h5 style="font-weight: 400;" style="text-align:center">Rewards for your Instagram stories</h5>
+    {% for offer, profile, posting in combinedStories %}
+      <div class="card"> <div class="card-body" style="background-color:#ffe6f9;">
+        <article class="media content-section">
+            <div class="media-body" style="text-align: center;">
+	        <strong><h5 style="text-align:center" class="card-title">{{  profile.restaurant_name }}</h5></strong>
+            <p style="text-align:center"> {{ posting.description_text }} </p>
+            <p class="text-muted" style="text-align:center">Expires on {{ posting.expiry_date }}</p>
+
+            <a href="{% url 'redeem-story' pk=offer.pk %}" class="btn btn-light btn-lg btn-block" role="button">Redeem</a>
+          </article>
+      </div> </div>
+    {% endfor %} 
+    <hr>
+  {% else %}
+    <h5 style="font-weight: 400;" style="text-align:center">No redeemable rewards for Instagram story submissions at this time.</h5>
+    <br>
+  {% endif %}
+  {% if combinedPosts%}
+    <h5 style="font-weight: 400;" style="text-align:center">Rewards for your Instagram posts</h5>
+    {% for offer, profile, posting in combinedPosts %}
+    <div class="card"> <div class="card-body" style="background-color:#ffe6f9;">
+        <article class="media content-section">
+            <div class="media-body" style="text-align: center;">
+                <strong><h5 style="text-align:center" class="card-title">{{  profile.restaurant_name }}</h5></strong>
+                <p style="text-align:center"> {{ posting.description_text }} </p>
+                <p class="text-muted" style="text-align:center">Expires on {{ posting.expiry_date }}</p>
+                <div id="formbox">
+                  <a href="{% url 'redeem-post' pk=offer.pk %}" class="btn btn-light btn-lg btn-block" role="button">Redeem</a>
+            </article>
+        </div> </div>
+      {% endfor %} 
+      <hr>
+  {% else %}
+    <h5 style="font-weight: 400;" style="text-align:center">No redeemable rewards for Instagram post submissions at this time.</h5>
+    <br>
+  {% endif %}
+
+{% endblock content %}

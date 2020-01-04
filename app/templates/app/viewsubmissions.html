@@ -1,0 +1,39 @@
+{% extends "app/base.html" %}
+{% block content %}
+
+<br>
+<h4 style="font-weight: 400;" style="line-height: 0pt;">Instagram content</h4>
+<div class="border-top pt-3"></div>
+
+{% if storySubs %}
+  <h5 style="font-weight: 400;" style="text-align:center">Story submissions</h5>
+  {% for storySub in storySubs %}
+          <div class="card"> 
+              <div class="card-body" style="background-color:#ffe6f9;">
+                <p style="text-align:center;"><strong>{{ storySub.link|urlize }}</strong></p>
+                <p class="text-muted" style="text-align:center;">Posted by {{ storySub.student }}</p>
+              </div>
+          </div>
+        <br>
+  {% endfor %}
+  <hr>
+{% else %}
+<h5 style="font-weight: 400;" style="text-align:center">No Instagram stories have been submitted at this time.</h5>
+{% endif %}
+
+{% if postSubs %}
+  <h5 style="font-weight: 400;" style="text-align:center">Post submissions</h5>
+  {% for postSub in postSubs %}
+          <div class="card"> 
+              <div class="card-body" style="background-color:#ffe6f9;">
+                <p style="text-align:center;"><strong>{{ postSub.link|urlize }}</strong></p>
+                <p class="text-muted" style="text-align:center;">Posted by {{ postSub.student }}</p>
+              </div>
+          </div>
+        <br>
+  {% endfor %}
+  <hr>
+{% else %}
+<h5 style="font-weight: 400;" style="text-align:center">No Instagram posts have been submitted at this time.</h5>
+{% endif %}
+{% endblock content %}

@@ -1,6 +1,7 @@
 {% extends "app/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+<br>
      <div class="content-section">
          <form method="POST" enctype="multipart/form-data">
 	   {% csrf_token %}
@@ -14,7 +15,7 @@
 	 </form>
 	 <div class="border-top pt-3">
 	     <small class="text-muted">
-	       Need An Account? <a class="ml-2" href="{% url 'register' %}">Sign Up</a>
+	       Need an account?<a class="ml-2" href="{% url 'register' %}">Register</a>
              </small>
 	 </div>
      </div>

@@ -34,10 +34,21 @@
                <div class="navbar-nav mr-auto">
                  <a class="nav-item nav-link" href="{% url 'student-home' %}">Home</a>
                </div>
+               <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="{% url 'redeemable-rewards' %}">Rewards</a>
+               </div>
 	       {% else %}
                <div class="navbar-nav mr-auto">
                  <a class="nav-item nav-link" href="{% url 'restaurant-home' %}">Home</a>
                </div>
+               {% if paid %}
+               <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="{% url 'view-submissions' %}">Submissions</a>
+              </div>
+               <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="{% url 'account-details' %}">Account</a>
+              </div>
+               {% endif %}
 	       {% endif %}
 	    {% endif %}
             <!-- Navbar Right Side -->
@@ -45,9 +56,9 @@
 	      {% if loggedIn %}
               <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
 	      {% else %}
-	      <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+	            <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
               <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-	      {% endif %}
+        {% endif %}
             </div>
           </div>
         </div>

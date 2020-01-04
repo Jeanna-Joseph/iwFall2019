@@ -38,48 +38,54 @@ class RestaurantProfileForm(forms.ModelForm):
         model = RestaurantProfile
         fields = ('restaurant_name',)
 
-class StudentPostSubmission(forms.Form):
+class StudentPostSubmission(forms.ModelForm):
     link = forms.CharField(
-        max_length=2000,
+        max_length=200,
         widget=forms.Textarea(),
         help_text='Paste a link to your post here.'
     )
+    class Meta:
+        model = StudentPostOffer
+        fields = ('link',)
     def clean(self):
         cleaned_data = super(StudentPostSubmission, self).clean()
-        message = cleaned_data.get('link')
-        if not name and not email and not message:
+        link = cleaned_data.get('link')
+        if not link:
             raise forms.ValidationError('Link required')
 
-class StudentStorySubmission(forms.Form):
+class StudentStorySubmission(forms.ModelForm):
     link = forms.CharField(
-        max_length=2000,
+        max_length=200,
         widget=forms.Textarea(),
         help_text='Paste a link to your story here.'
     )
+    class Meta:
+        model = StudentStoryOffer
+        fields = ('link',)
     def clean(self):
         cleaned_data = super(StudentStorySubmission, self).clean()
         link = cleaned_data.get('link')
         if not link:
             raise forms.ValidationError('Link required')
 
-class RestaurantPostOffering(forms.Form):
+class RestaurantPostOffering(forms.ModelForm):
     description_text = forms.CharField(max_length=200, required=True, help_text='Required: enter a description of the reward.')
-    quantity = forms.CharField(required=True)
-
+    class Meta:
+        model = RestaurantPostPosting
+        fields = ('description_text',)
     def clean(self):
         cleaned_data = super(RestaurantPostOffering, self).clean()
         description_text = cleaned_data.get('description_text')
-        quantity = cleaned_data.get('quantity')
-        if not quantity or not description_text:
-            raise forms.ValidationError('Fill out all required fields')
+        if not description_text:
+            raise forms.ValidationError('Description of reward required')
 
-class RestaurantStoryOffering(forms.Form):
+class RestaurantStoryOffering(forms.ModelForm):
     description_text = forms.CharField(max_length=200, required=True, help_text='Required: enter a description of the reward.')
-    quantity = forms.CharField(required=True)
-
+    class Meta:
+        model = RestaurantStoryPosting
+        fields = ('description_text',)
     def clean(self):
         cleaned_data = super(RestaurantStoryOffering, self).clean()
         description_text = cleaned_data.get('description_text')
-        quantity = cleaned_data.get('quantity')
-        if not quantity or not description_text:
-            raise forms.ValidationError('Fill out all required fields')
+        if not description_text:
+            raise forms.ValidationError('Description of reward required')
