@@ -134,8 +134,8 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/homepage/'
 
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey' 
-EMAIL_HOST_PASSWORD = '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'
+EMAIL_HOST_USER = 'app157318875@heroku.com' 
+EMAIL_HOST_PASSWORD = 'fkcnizdj1392'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
