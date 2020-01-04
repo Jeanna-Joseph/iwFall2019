@@ -18,6 +18,7 @@ class StudentUserForm(UserCreationForm):
         
 class RestaurantUserForm(UserCreationForm):  
     restaurant_name = forms.CharField(max_length=60, required=True)
+    email = forms.CharField(required=True, widget=forms.EmailInput(attrs={'class': 'validate',}))
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'restaurant_name', 'email', 'username', 'password1', 'password2')
