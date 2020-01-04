@@ -10,11 +10,7 @@
 {% else %}
   {% if currentStory is None %}
   <div style="text-align:center">
-    <div class="card"> 
-            <div class="card-body" style="background-color:#ffe6f9;">
-              <a href="{% url 'restaurant-story' %}" class="btn btn-outline-info btn-lg btn-block" role="button">Post Instagram story reward</a>
-            </div>
-        </div>
+              <a href="{% url 'restaurant-story' %}" class="btn btn-light btn-lg btn-block" role="button">Post Instagram story reward</a>
         </div>
       <br>
   {% else %}
@@ -32,11 +28,7 @@
   {% endif %}
   {% if currentPost is None %}
   <div style="text-align:center">
-        <div class="card"> 
-            <div class="card-body" style="background-color:#ffe6f9;">
-              <a href="{% url 'restaurant-post' %}" class="btn btn-outline-info btn-lg btn-block" role="button">Post Instagram post reward</a>
-            </div>
-        </div>
+              <a href="{% url 'restaurant-post' %}" class="btn btn-light btn-lg btn-block" role="button">Post Instagram post reward</a>
         </div>
       <br>
   {% else %}
