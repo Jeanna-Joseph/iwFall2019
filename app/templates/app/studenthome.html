@@ -6,13 +6,13 @@
 <div class="border-top pt-3"></div>
 
 {% if combinedStories %}
-    <h5 style="font-weight: 400;" style="text-align:center">Offers for posting Instagram stories at these restaurants in your area!</h5>
+    <h5 style="font-weight: 400;" style="text-align:center">Offers for Instagram stories</h5>
     {% for posting, profile in combinedStories %}
       <div class="card"> <div class="card-body" style="background-color:#ffe6f9;">
         <article class="media content-section">
             <div class="media-body" style="text-align: center;">
 	        <strong><h5 style="text-align:center" class="card-title">{{  profile.restaurant_name }}</h5></strong>
-                <p style="text-align:center"> {{ posting.description_text }} </p>
+                <p style="text-align:center"> Reward: {{ posting.description_text }} </p>
                 <p class="text-muted" style="text-align:center">Expires on {{ posting.expiry_date }}</p>
                 <p class="text-muted" tyle="text-align:center"> Only {{ posting.quantity }} rewards left!</p>
 
@@ -28,7 +28,7 @@
 
     <br>
 {% if combinedPosts %}
-    <h5 style="font-weight: 400;" style="text-align:center">Offers for posting Instagram posts at these restaurants in your area!</h5>
+    <h5 style="font-weight: 400;" style="text-align:center">Offers for Instagram posts</h5>
     {% for posting, profile in combinedPosts %}
     <div class="card"> <div class="card-body" style="background-color:#ffe6f9;">
         <article class="media content-section">
