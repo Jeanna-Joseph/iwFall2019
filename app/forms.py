@@ -71,22 +71,30 @@ class StudentStorySubmission(forms.ModelForm):
 
 class RestaurantPostOffering(forms.ModelForm):
     description_text = forms.CharField(max_length=200, required=True, help_text='Required: enter a description of the reward.')
+    quantity = forms.IntegerField(required=True, help_text='Required: enter a quantity of the reward you are willing to distribute (maximum of 25).')
     class Meta:
         model = RestaurantPostPosting
         fields = ('description_text',)
     def clean(self):
         cleaned_data = super(RestaurantPostOffering, self).clean()
         description_text = cleaned_data.get('description_text')
+        quantity = cleaned_data.get('quantity')
         if not description_text:
             raise forms.ValidationError('Description of reward required')
+        if quantity > 25 or quantity < 1:
+            raise forms.ValidationError('Quantity must be between 1 and 25')
 
 class RestaurantStoryOffering(forms.ModelForm):
     description_text = forms.CharField(max_length=200, required=True, help_text='Required: enter a description of the reward.')
+    quantity = forms.IntegerField(required=True, help_text='Required: enter a quantity of the reward you are willing to distribute (maximum of 50).')
     class Meta:
         model = RestaurantStoryPosting
         fields = ('description_text',)
     def clean(self):
         cleaned_data = super(RestaurantStoryOffering, self).clean()
         description_text = cleaned_data.get('description_text')
+        quantity = cleaned_data.get('quantity')
         if not description_text:
             raise forms.ValidationError('Description of reward required')
+        if quantity > 50 or quantity < 1:
+            raise forms.ValidationError('Quantity must be between 1 and 50')

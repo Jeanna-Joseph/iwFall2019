@@ -34,7 +34,7 @@
         <article class="media content-section">
             <div class="media-body" style="text-align: center;">
                 <strong><h5 style="text-align:center" class="card-title">{{  profile.restaurant_name }}</h5></strong>
-                <p style="text-align:center"> {{ posting.description_text }} </p>
+                <p style="text-align:center"> Reward: {{ posting.description_text }} </p>
                 <p class="text-muted" style="text-align:center">Expires on {{ posting.expiry_date }}</p>
                 <p class="text-muted" tyle="text-align:center"> Only {{ posting.quantity }} rewards left!</p>
                 <a href="{% url 'submit-post' pk=posting.pk %}" class="btn btn-light btn-lg btn-block" role="button">Submit a post</a>
