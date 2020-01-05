@@ -5,9 +5,11 @@
 <h4 style="font-weight: 400;" style="line-height: 0pt;">Redeem rewards</strong></h4>
 <div class="border-top pt-3"></div>
 
-{% if rewards %}
-<p class="text-muted" style="text-align:center">Present this screen at the register for the cashier to redeem your reward on your behalf.</p>
-{% endif %}
+  {% if rewards %}
+  <p class="text-muted" style="text-align:center">Present this screen at the register for the cashier to redeem your reward on your behalf.</p>
+  {% endif %}
+
+  {% if combinedStories %}
     <h5 style="font-weight: 400;" style="text-align:center">Rewards for your Instagram stories</h5>
     {% for offer, profile, posting in combinedStories %}
       <div class="card"> <div class="card-body" style="background-color:#ffe6f9;">
@@ -26,7 +28,7 @@
     <h5 style="font-weight: 400;" style="text-align:center">No redeemable rewards for Instagram story submissions at this time</h5>
     <br>
   {% endif %}
-  {% if combinedPosts%}
+  {% if combinedPosts %}
     <h5 style="font-weight: 400;" style="text-align:center">Rewards for your Instagram posts</h5>
     {% for offer, profile, posting in combinedPosts %}
     <div class="card"> <div class="card-body" style="background-color:#ffe6f9;">
