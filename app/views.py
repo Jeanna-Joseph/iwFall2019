@@ -373,6 +373,7 @@ def submitstory(request, pk):
                     story = story_form.save(commit=False)
                     link = story_form.cleaned_data.get('link')
                     image = story_form.cleaned_data.get('image')
+
                     validate = URLValidator()
                     try:
                         validate(link)
