@@ -220,6 +220,7 @@ def redeemablerewards(request):
         return redirect('home')
 
     context = {
+        'rewards': zip(combinedStories, combinedPosts),
         'combinedStories': combinedStories,
         'combinedPosts': combinedPosts,
         'loggedIn': request.user.is_authenticated, 

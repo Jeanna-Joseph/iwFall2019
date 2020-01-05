@@ -74,7 +74,7 @@ class RestaurantPostOffering(forms.ModelForm):
     quantity = forms.IntegerField(required=True, help_text='Required: enter a quantity of the reward you are willing to distribute (maximum of 25).')
     class Meta:
         model = RestaurantPostPosting
-        fields = ('description_text',)
+        fields = ('description_text', 'quantity')
     def clean(self):
         cleaned_data = super(RestaurantPostOffering, self).clean()
         description_text = cleaned_data.get('description_text')
@@ -89,7 +89,7 @@ class RestaurantStoryOffering(forms.ModelForm):
     quantity = forms.IntegerField(required=True, help_text='Required: enter a quantity of the reward you are willing to distribute (maximum of 50).')
     class Meta:
         model = RestaurantStoryPosting
-        fields = ('description_text',)
+        fields = ('description_text', 'quantity')
     def clean(self):
         cleaned_data = super(RestaurantStoryOffering, self).clean()
         description_text = cleaned_data.get('description_text')
