@@ -214,13 +214,15 @@ def redeemablerewards(request):
                 currentPostSubs = None
                 currentPostSubsProfiles = None
                 combinedPosts = None
+                
+            rewards = (len(currentStorySubs) > 0) or (len(currentPostSubs) > 0)
     else:
         paid = None
         student = False
         return redirect('home')
 
     context = {
-        'rewards': zip(combinedStories, combinedPosts),
+        'rewards': rewards,
         'combinedStories': combinedStories,
         'combinedPosts': combinedPosts,
         'loggedIn': request.user.is_authenticated, 
