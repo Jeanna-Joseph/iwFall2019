@@ -25,8 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECRET_KEY = 'ybcz*3hf(tquvv)n^26p1@-7*)t8wipw93ef)=ftu_-nmp_qj&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['postento.herokuapp.com']
 
