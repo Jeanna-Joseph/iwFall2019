@@ -215,7 +215,7 @@ def redeemablerewards(request):
                 currentPostSubsProfiles = None
                 combinedPosts = None
                 
-            rewards = (len(currentStorySubs) > 0) or (len(currentPostSubs) > 0)
+            rewards = (currentStorySubs != None) or (currentPostSubs != None)
     else:
         paid = None
         student = False
