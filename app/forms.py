@@ -45,14 +45,18 @@ class StudentPostSubmission(forms.ModelForm):
         widget=forms.Textarea(),
         help_text='Paste a link to your post here.'
     )
+    image = forms.ImageField(help_text='Please upload your photo here.')
     class Meta:
         model = StudentPostOffer
-        fields = ('link',)
+        fields = ('link', 'image')
     def clean(self):
         cleaned_data = super(StudentPostSubmission, self).clean()
         link = cleaned_data.get('link')
+        image = cleaned_data.get('image')
         if not link:
             raise forms.ValidationError('Link required')
+        if not image:
+            raise forms.ValidationError('Image required')
 
 class StudentStorySubmission(forms.ModelForm):
     link = forms.CharField(
@@ -60,14 +64,18 @@ class StudentStorySubmission(forms.ModelForm):
         widget=forms.Textarea(),
         help_text='Paste a link to your story here.'
     )
+    image = forms.ImageField(help_text='Please upload your photo here.')
     class Meta:
         model = StudentStoryOffer
-        fields = ('link',)
+        fields = ('link','image')
     def clean(self):
         cleaned_data = super(StudentStorySubmission, self).clean()
         link = cleaned_data.get('link')
+        image = cleaned_data.get('image')
         if not link:
             raise forms.ValidationError('Link required')
+        if not image:
+            raise forms.ValidationError('Image required')
 
 class RestaurantPostOffering(forms.ModelForm):
     description_text = forms.CharField(max_length=200, required=True, help_text='Required: enter a description of the reward.')
@@ -98,3 +106,19 @@ class RestaurantStoryOffering(forms.ModelForm):
             raise forms.ValidationError('Description of reward required')
         if quantity > 50 or quantity < 1:
             raise forms.ValidationError('Quantity must be between 1 and 50')
+
+class ReportStory(forms.Form):
+    description_text = forms.CharField(max_length=200, required=True, help_text='Required: enter your reasons for reporting this content (ex: inappopriate, irrelevant).')
+    def clean(self):
+        cleaned_data = super(ReportStory, self).clean()
+        description_text = cleaned_data.get('description_text')
+        if not description_text:
+            raise forms.ValidationError('Reasoning for reporting is required')
+
+class ReportPost(forms.Form):
+    description_text = forms.CharField(max_length=200, required=True, help_text='Required: enter your reasons for reporting this content (ex: inappopriate, irrelevant).')
+    def clean(self):
+        cleaned_data = super(ReportStory, self).clean()
+        description_text = cleaned_data.get('description_text')
+        if not description_text:
+            raise forms.ValidationError('Reasoning for reporting is required')

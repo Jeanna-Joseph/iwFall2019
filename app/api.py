@@ -15,3 +15,11 @@ def getPostPostings(rest):
 def getIsPaid(rest):
     restaurantProf = RestaurantProfile.objects.get(user=rest)
     return restaurantProf.paid
+
+def reportStudentStory(story):
+    story.reported = True
+    story.save
+    
+def reportStudentPost(post):
+    post.reported = True
+    post.save

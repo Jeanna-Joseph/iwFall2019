@@ -11,6 +11,7 @@ class User(AbstractUser):
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='student_profile')
     instagram_handle = models.CharField(max_length=30, blank=True)
+    active = models.BooleanField(default=True) # True if not reported
 
 class RestaurantProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='restaurant_profile')
@@ -50,13 +51,17 @@ class RestaurantStoryPosting(models.Model):
 class StudentPostOffer(models.Model):
     posting = models.ForeignKey(RestaurantPostPosting, on_delete=models.CASCADE)
     link = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='images/')
     acquired_date = models.DateTimeField(default=timezone.now)
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     used = models.BooleanField(default=False)
+    reported = models.BooleanField(default=False)
 
 class StudentStoryOffer(models.Model):
     posting = models.ForeignKey(RestaurantStoryPosting, on_delete=models.CASCADE)
     link = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='images/')
     acquired_date = models.DateTimeField(default=timezone.now)
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     used = models.BooleanField(default=False)
+    reported = models.BooleanField(default=False)

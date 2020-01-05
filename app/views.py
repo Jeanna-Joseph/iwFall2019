@@ -184,7 +184,7 @@ def redeemablerewards(request):
                 currentStorySubsProfiles = []
                 currentStoryPostings = []
                 for storySub in storySubs:
-                    if storySub.posting.expiry_date >= timezone.now() and (not storySub.used):
+                    if storySub.posting.expiry_date >= timezone.now() and (not storySub.used) and (not storySub.reported):
                         currentStorySubs.append(storySub)
                         restStoryPosting = storySub.posting
                         currentStoryPostings.append(restStoryPosting)
@@ -203,7 +203,7 @@ def redeemablerewards(request):
                 currentPostSubsProfiles = []
                 currentPostPostings = []
                 for postSub in postSubs:
-                    if postSub.posting.expiry_date >= timezone.now() and (not postSub.used):
+                    if postSub.posting.expiry_date >= timezone.now() and (not postSub.used) and (not postSub.reported):
                         currentPostSubs.append(postSub) 
                         restPostPosting = postSub.posting
                         currentPostPostings.append(restPostPosting)
@@ -255,7 +255,7 @@ def redeemstory(request, pk):
                 currentStorySubsProfiles = []
                 currentStoryPostings = []
                 for storySub in storySubs:
-                    if storySub.posting.expiry_date >= timezone.now() and (not storySub.used):
+                    if storySub.posting.expiry_date >= timezone.now() and (not storySub.used) and (not storySub.reported):
                         currentStorySubs.append(storySub)
                         restStoryPosting = storySub.posting
                         currentStoryPostings.append(restStoryPosting)
@@ -274,7 +274,7 @@ def redeemstory(request, pk):
                 currentPostSubsProfiles = []
                 currentPostPostings = []
                 for postSub in postSubs:
-                    if postSub.posting.expiry_date >= timezone.now() and (not postSub.used):
+                    if postSub.posting.expiry_date >= timezone.now() and (not postSub.used) and (not postSub.reported):
                         currentPostSubs.append(postSub) 
                         restPostPosting = postSub.posting
                         currentPostPostings.append(restPostPosting)
@@ -322,7 +322,7 @@ def redeempost(request, pk):
                 storySubs = StudentStoryOffer.objects.filter(student=request.user)
                 currentStorySubsProfiles = []
                 for storySub in storySubs:
-                    if storySub.posting.expiry_date >= timezone.now() and (not storySub.used):
+                    if storySub.posting.expiry_date >= timezone.now() and (not storySub.used) and (not storySub.reported):
                         currentStorySubs.append(storySub)
                         restStoryPosting = storySub.posting
                         restUser = restStoryPosting.restaurant
@@ -339,7 +339,7 @@ def redeempost(request, pk):
                 postSubs = StudentPostOffer.objects.filter(student=request.user)
                 currentPostSubsProfiles = []
                 for postSub in postSubs:
-                    if postSub.posting.expiry_date >= timezone.now() and (not postSub.used):
+                    if postSub.posting.expiry_date >= timezone.now() and (not postSub.used) and (not postSub.reported):
                         currentPostSubs.append(postSub) 
                         restPostPosting = postSub.posting
                         restUser = restPostPosting.restaurant
@@ -367,11 +367,12 @@ def submitstory(request, pk):
     if request.user.is_authenticated:       
         if request.user.is_student:  
             if request.method == 'POST':
-                story_form = StudentStorySubmission(request.POST, prefix='SS')
+                story_form = StudentStorySubmission(request.POST, request.FILES, prefix='SS')
                           
                 if story_form.is_valid():
                     story = story_form.save(commit=False)
                     link = story_form.cleaned_data.get('link')
+                    image = story_form.cleaned_data.get('image')
                     validate = URLValidator()
                     try:
                         validate(link)
@@ -425,7 +426,7 @@ def submitpost(request, pk):
     if request.user.is_authenticated:       
         if request.user.is_student:  
             if request.method == 'POST':
-                post_form = StudentPostSubmission(request.POST, prefix='SP')
+                post_form = StudentPostSubmission(request.POST, request.FILES, prefix='SP')
                 
                 if post_form.is_valid():
                     post = post_form.save(commit=False)
@@ -593,15 +594,20 @@ def viewsubmissions(request):
                 restStoryPostings = RestaurantStoryPosting.objects.filter(restaurant=request.user)
                 storySubs = []
                 storyPostings = []
+                storyImageUrls = []
                 for storyPosting in restStoryPostings:
-                    if StudentStoryOffer.objects.filter(posting=storyPosting).exists():
-                        for storyOffer in StudentStoryOffer.objects.filter(posting=storyPosting):
+                    if StudentStoryOffer.objects.filter(posting=storyPosting, reported=False).exists():
+                        for storyOffer in StudentStoryOffer.objects.filter(posting=storyPosting, reported=False):
                             storySubs.append(storyOffer)
                             storyPostings.append(storyPosting)
-                combinedStories = zip(storySubs, storyPostings)
+                            storyImageUrls.append(storyOffer.image.url)
+                combinedStories = zip(storySubs, storyPostings, storyImageUrls)
             else:
                 storySubs = None
                 storyPostings = None
+                storyImageUrls = None
+                combinedStories = None
+            if storySubs != None and len(storySubs) == 0:
                 combinedStories = None
             
             # get all post submissions
@@ -609,15 +615,20 @@ def viewsubmissions(request):
                 restPostPostings = RestaurantPostPosting.objects.filter(restaurant=request.user)
                 postSubs = []
                 postPostings = []
+                postImageUrls = []
                 for postPosting in restPostPostings:
-                    if StudentPostOffer.objects.filter(posting=postPosting).exists():
-                        for postOffer in StudentPostOffer.objects.filter(posting=postPosting):
+                    if StudentPostOffer.objects.filter(posting=postPosting, reported=False).exists():
+                        for postOffer in StudentPostOffer.objects.filter(posting=postPosting, reported=False):
                             postSubs.append(postOffer)
                             postPostings.append(postPosting)
-                combinedPosts = zip(postSubs, postPostings)
+                            postImageUrls.append(postOffer.image.url)
+                combinedPosts = zip(postSubs, postPostings, postImageUrls)
             else:
                 postSubs = None
                 postPostings = None
+                postImageUrls = None
+                combinedPosts = None
+            if postSubs != None and len(postSubs) == 0:
                 combinedPosts = None
     else:
         paid = None
@@ -690,4 +701,95 @@ def restaurantpost(request):
                 'paid': paid
             })
     else:
+        return redirect('home')
+
+def reportstory(request, pk):
+    if request.user.is_authenticated:
+        student = request.user.is_student
+        if (student == True):
+            paid = None
+            return redirect('student-home')
+        else:
+            restaurantProf = RestaurantProfile.objects.get(user=request.user)
+            paid = restaurantProf.paid
+            if not paid:
+                return redirect('restaurant-home')
+            
+            if request.method == 'POST':
+                report_form = ReportStory(request.POST, prefix='RS')
+                
+                if report_form.is_valid():
+                    description_text = report_form.cleaned_data.get('description_text')
+                    submittedStory = StudentStoryOffer.objects.get(pk=pk)
+                    studentProf = StudentProfile.objects.get(user=submittedStory.student)
+
+                    submittedStory.reported = True
+                    submittedStory.save()                    
+                    send_mail(
+                            'postento: Restaurant user "' + request.user.username + '" has reported Student user "' + studentProf.user.username + '"',
+                            'The description of the report reads: "' + description_text + '". Visit the admin portal to modify the student\'s status as needed.',
+                            settings.DEFAULT_FROM_EMAIL,
+                            [ settings.EMAIL_HOST_USER, 'postentoteam@gmail.com']
+                    )
+                    print('postento: Restaurant user "' + request.user.username + '" has reported Student user "' + studentProf.user.username + '" for student\'s posting posting pk =' + str(submittedStory.pk))
+                    print('The description of the report reads: "' + description_text + '". Visit the admin portal to modify the student\'s status as needed.')
+                    messages.success(request, f'Your report has been recieved and it will be reviewed. In the meantime, we\'ve removed the reported submission.')
+                    return redirect('view-submissions')
+            else:
+                report_form = ReportStory(prefix='RS')
+
+            return render(request, 'app/reportstory.html',{
+                'report_form': report_form,
+                'loggedIn': request.user.is_authenticated, 
+                'student': False,
+                'paid': None
+            }) 
+    else:
+        paid = None
+        return redirect('home')
+    
+def reportpost(request, pk):
+    if request.user.is_authenticated:
+        student = request.user.is_student
+        if (student == True):
+            paid = None
+            return redirect('student-home')
+        else:
+            restaurantProf = RestaurantProfile.objects.get(user=request.user)
+            paid = restaurantProf.paid
+            if not paid:
+                return redirect('restaurant-home')
+            
+            if request.method == 'POST':
+                report_form = ReportPost(request.POST, prefix='RP')
+                
+                if report_form.is_valid():
+                    description_text = report_form.cleaned_data.get('description_text')
+                    submittedPost = StudentPostOffer.objects.get(pk=pk)
+                    studentProf = StudentProfile.objects.get(user=submittedPost.student)
+                    
+                    submittedPost.reported = True
+                    submittedPost.save()  
+                    
+                    send_mail(
+                            'postento: Restaurant user "' + request.user.username + '" has reported Student user "' + studentProf.user.username + '"',
+                            'The description of the report reads: "' + description_text + '". Visit the admin portal to modify the student\'s status as needed.',
+                            settings.DEFAULT_FROM_EMAIL,
+                            [ settings.EMAIL_HOST_USER, 'postentoteam@gmail.com']
+                    )
+                    print('postento: Restaurant user "' + request.user.username + '" has reported Student user "' + studentProf.user.username + '" for student\'s posting posting pk =' + str(submittedPost.pk))
+                    print('The description of the report reads: "' + description_text + '". Visit the admin portal to modify the student\'s status as needed.')
+                    messages.success(request, f'Your report has been recieved and it will be reviewed. In the meantime, we\'ve removed the reported submission.')
+                    return redirect('view-submissions')
+            else:
+                report_form = ReportPost(prefix='RP')
+
+            return render(request, 'app/reportpost.html',{
+                'report_form': report_form,
+                'loggedIn': request.user.is_authenticated, 
+                'student': False,
+                'paid': None
+            }) 
+    else:
+        paid = None
         return redirect('home')

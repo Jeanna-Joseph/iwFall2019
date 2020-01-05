@@ -7,12 +7,17 @@
 
 {% if combinedStories %}
   <h5 style="font-weight: 400;" style="text-align:center">Story submissions</h5>
-  {% for storySub, storyPosting in combinedStories %}
+  {% for storySub, storyPosting, storyUrl in combinedStories %}
           <div class="card"> 
               <div class="card-body" style="background-color:#ffe6f9;">
-                <p style="text-align:center;"><strong>{{ storySub.link|urlize }}</strong></p>
-                <p class="text-muted" style="text-align:center;">Posted by {{ storySub.student }}</p>
-                <p class="text-muted" style="text-align:center;">{{ storyPosting.description_text }}</p>
+                <div class="embed-responsive embed-responsive-1by1">
+                  <img class="card-image-top embed-responsive-item" src="{{ storyUrl }}" alt="{{ storyPosting.student }}">
+                </div>
+                  <br>
+                  <p style="text-align:center; margin-bottom:0;"><strong>{{ storySub.link|urlize }}</strong></p>
+                  <p class="text-muted" style="text-align:center; padding-top:0; margin-bottom: 0;">Posted by: {{ storySub.student }}</p>
+                  <p class="text-muted" style="text-align:center; padding-top:0; margin-bottom: 0;">Reward type: {{ storyPosting.description_text }}</p>
+                  <a href="{% url 'report-story' pk=storySub.pk %}" class="btn btn-light btn-lg btn-block" role="button">Report this content</a>
               </div>
           </div>
         <br>
@@ -24,12 +29,17 @@
 
 {% if combinedPosts %}
   <h5 style="font-weight: 400;" style="text-align:center">Post submissions</h5>
-  {% for postSub, postPosting in combinedPosts %}
+  {% for postSub, postPosting, postUrl in combinedPosts %}
           <div class="card"> 
               <div class="card-body" style="background-color:#ffe6f9;">
-                <p style="text-align:center;"><strong>{{ postSub.link|urlize }}</strong></p>
-                <p class="text-muted" style="text-align:center;">Posted by {{ postSub.student }}</p>
-                <p class="text-muted" style="text-align:center;">{{ postPosting.description_text }}</p>
+                <div class="embed-responsive embed-responsive-1by1">
+                  <img class="card-image-top embed-responsive-item" src="{{ postUrl }}" alt="{{ postPosting.student }}">
+                </div>
+                <br>
+                <p style="text-align:center; margin-bottom:0;"><strong>{{ postSub.link|urlize }}</strong></p>
+                <p class="text-muted" style="text-align:center; padding-top:0; margin-bottom: 0;">Posted by: {{ postSub.student }}</p>
+                <p class="text-muted" style="text-align:center; padding-top:0; margin-bottom: 0;">Reward type: {{ postPosting.description_text }}</p>
+                <a href="{% url 'report-post' pk=postSub.pk %}" class="btn btn-light btn-lg btn-block" role="button">Report this content</a>
               </div>
           </div>
         <br>

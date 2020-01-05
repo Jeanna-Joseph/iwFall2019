@@ -3,11 +3,11 @@
 {% block content %}
 <br>
      <div class="content-section">
-         <form method="POST" enctype="multipart/form-data">
+         <form method="POST">
 	   {% csrf_token %}
 	   <fieldset class="form-group"> 
-	     <legend class="border-bottom mb-4">Submit your Instagram post</legend>
-	     {{ post_form|crispy }}
+	     <legend class="border-bottom mb-4">Report Instagram story</legend>
+	     {{ report_form|crispy }}
 	   </fieldset>
 	   <div class="form-group">
 	     <button class="btn btn-outline-info" type="submit">Submit</button>
