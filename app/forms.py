@@ -118,7 +118,7 @@ class ReportStory(forms.Form):
 class ReportPost(forms.Form):
     description_text = forms.CharField(max_length=200, required=True, help_text='Required: enter your reasons for reporting this content (ex: inappopriate, irrelevant).')
     def clean(self):
-        cleaned_data = super(ReportStory, self).clean()
+        cleaned_data = super(ReportPost, self).clean()
         description_text = cleaned_data.get('description_text')
         if not description_text:
             raise forms.ValidationError('Reasoning for reporting is required')
