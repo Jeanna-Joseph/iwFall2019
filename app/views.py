@@ -592,23 +592,33 @@ def viewsubmissions(request):
             if RestaurantStoryPosting.objects.filter(restaurant=request.user).exists():
                 restStoryPostings = RestaurantStoryPosting.objects.filter(restaurant=request.user)
                 storySubs = []
+                storyPostings = []
                 for storyPosting in restStoryPostings:
                     if StudentStoryOffer.objects.filter(posting=storyPosting).exists():
                         for storyOffer in StudentStoryOffer.objects.filter(posting=storyPosting):
                             storySubs.append(storyOffer)
+                            storyPostings.append(storyPosting)
+                combinedStories = zip(storySubs, storyPostings)
             else:
                 storySubs = None
+                storyPostings = None
+                combinedStories = None
             
             # get all post submissions
             if RestaurantPostPosting.objects.filter(restaurant=request.user).exists():
                 restPostPostings = RestaurantPostPosting.objects.filter(restaurant=request.user)
                 postSubs = []
+                postPostings = []
                 for postPosting in restPostPostings:
                     if StudentPostOffer.objects.filter(posting=postPosting).exists():
                         for postOffer in StudentPostOffer.objects.filter(posting=postPosting):
                             postSubs.append(postOffer)
+                            postPostings.append(postPosting)
+                combinedPosts = zip(postSubs, postPostings)
             else:
                 postSubs = None
+                postPostings = None
+                combinedPosts = None
     else:
         paid = None
         return redirect('home')
@@ -617,8 +627,8 @@ def viewsubmissions(request):
                   {'loggedIn': request.user.is_authenticated, 
                    'student': student, 
                    'paid': paid, 
-                   'storySubs': storySubs, 
-                   'postSubs': postSubs})
+                   'combinedStories': combinedStories, 
+                   'combinedPosts': combinedPosts})
     
 def restaurantstory(request):
     if request.user.is_authenticated:       

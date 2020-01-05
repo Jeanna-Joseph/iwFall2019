@@ -5,14 +5,14 @@
 <h4 style="font-weight: 400;" style="line-height: 0pt;">Instagram content</h4>
 <div class="border-top pt-3"></div>
 
-{% if storySubs %}
+{% if combinedStories %}
   <h5 style="font-weight: 400;" style="text-align:center">Story submissions</h5>
-  {% for storySub in storySubs %}
+  {% for storySub, storyPosting in combinedStories %}
           <div class="card"> 
               <div class="card-body" style="background-color:#ffe6f9;">
                 <p style="text-align:center;"><strong>{{ storySub.link|urlize }}</strong></p>
                 <p class="text-muted" style="text-align:center;">Posted by {{ storySub.student }}</p>
-                <p class="text-muted" style="text-align:center;">For posting: {{ storySub.posting.description }}</p>
+                <p class="text-muted" style="text-align:center;">For posting: {{ storyPosting.description }}</p>
               </div>
           </div>
         <br>
@@ -22,14 +22,14 @@
 <h5 style="font-weight: 400;" style="text-align:center">No Instagram stories have been submitted at this time</h5>
 {% endif %}
 
-{% if postSubs %}
+{% if combinedPosts %}
   <h5 style="font-weight: 400;" style="text-align:center">Post submissions</h5>
-  {% for postSub in postSubs %}
+  {% for postSub, postPosting in combinedPosts %}
           <div class="card"> 
               <div class="card-body" style="background-color:#ffe6f9;">
                 <p style="text-align:center;"><strong>{{ postSub.link|urlize }}</strong></p>
                 <p class="text-muted" style="text-align:center;">Posted by {{ postSub.student }}</p>
-                <p class="text-muted" style="text-align:center;">For posting: {{ postSub.posting.description }}</p>
+                <p class="text-muted" style="text-align:center;">For posting: {{ postPosting.description }}</p>
               </div>
           </div>
         <br>
