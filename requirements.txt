@@ -20,7 +20,7 @@ django-storages==1.8
 django-subscriptions==1.1.0
 docutils==0.15.2
 gunicorn==19.7.1
-httplib2==0.14.0
+httplib2==0.18.0
 idna==2.8
 Jinja2==2.10.3
 jmespath==0.9.4
