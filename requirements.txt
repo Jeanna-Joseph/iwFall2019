@@ -14,7 +14,7 @@ django-fsm-log==1.6.2
 django-heroku==0.3.1
 django-instagram-api==0.3.7
 django-m2m-history==0.3.6
-django-s3file==5.0.5
+django-s3file==5.5.1
 django-social-api==0.1.1
 django-storages==1.8
 django-subscriptions==1.1.0
